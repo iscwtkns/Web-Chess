@@ -1,0 +1,71 @@
+h1 {
+    text-align: center;
+}
+
+body {
+    background-color: gray;
+}
+
+.promotionButtons {
+    padding: 20px;
+    margin: 0 auto;
+    display: grid;
+    column-gap: 10px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+
+    width: 480px;
+    height: 120px;
+}
+.promotionButton {
+    border: black solid 4px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 4px royalblue;
+    width: 100px;
+    height: 100px;
+}
+
+.board {
+    background-color: dimgray;
+    padding: 10px;
+    display: grid;
+    width: 480px;
+    height: 480px;
+    grid-template-rows: repeat(8, 1fr);
+    grid-template-columns: repeat(1, 1fr);
+    margin: 0 auto;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    width: 480px;
+    height: 60px;
+}
+
+.row:nth-child(odd) {
+    direction: rtl;
+}
+
+.square:nth-child(odd) {
+    background-color: #660000;
+    width: 60px;
+    height: 60px;
+}
+.square:nth-child(even) {
+    background-color: #f8e7bb;
+    width: 60px;
+    height: 60px;
+}
+
+img {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+}
+
+.piece {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+}
