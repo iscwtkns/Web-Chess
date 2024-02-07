@@ -7,102 +7,109 @@
 </head>
 <body>
     <h1>Chess</h1>
-    <div class = "board">
-        <div class = "row">
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
+    <div class = "game">
+        <div class = "setup">
+            <button class = "startGame" onclick = "startGame()">Start New Game</button>
         </div>
-        <div class = "row">
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
+        <div class = "board">
+            <div class = "row">
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+            </div>
+            <div class = "row">
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+            </div>
+            <div class = "row">
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+            </div>
+            <div class = "row">
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+            </div>
+            <div class = "row">
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+            </div>
+            <div class = "row">
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+            </div>
+            <div class = "row">
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+            </div>
+            <div class = "row">
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+                <div class = "square"></div>
+            </div>
         </div>
-        <div class = "row">
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-        </div>
-        <div class = "row">
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-        </div>
-        <div class = "row">
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-        </div>
-        <div class = "row">
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-        </div>
-        <div class = "row">
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-        </div>
-        <div class = "row">
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
-            <div class = "square"></div>
+
+        <div class = "promotionButtons">
+            <button class = "promotionButton">
+                <img src = "pieces/blackQueen.png" alt = "Queen" id = "queen">
+            </button>
+            <button class = "promotionButton">
+                <img src = "pieces/blackRook.png" alt = "Rook" id = "rook">
+            </button>
+            <button class = "promotionButton">
+                <img src = "pieces/blackHorse.png" alt = "Horse" id = "horse">
+            </button>
+            <button class = "promotionButton">
+                <img src = "pieces/blackBishop.png" alt = "Bishop" id = bishop>
+            </button>
         </div>
     </div>
-    <div class = "promotionButtons">
-        <button class = "promotionButton">
-            <img src = "pieces/blackQueen.png" alt = "Queen" id = "queen">
-        </button>
-        <button class = "promotionButton">
-            <img src = "pieces/blackRook.png" alt = "Rook" id = "rook">
-        </button>
-        <button class = "promotionButton">
-            <img src = "pieces/blackHorse.png" alt = "Horse" id = "horse">
-        </button>
-        <button class = "promotionButton">
-            <img src = "pieces/blackBishop.png" alt = "Bishop" id = bishop>
-        </button>
-    </div>
+
 </body>
 <script src="script.js"></script>
 </html>

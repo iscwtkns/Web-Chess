@@ -5,18 +5,19 @@ h1 {
 body {
     background-color: gray;
 }
-
+/*
 .promotionButtons {
-    padding: 20px;
-    margin: 0 auto;
     display: grid;
     column-gap: 10px;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(1, 1fr);
-
+    grid-column: 1 / span 4;
+    grid-row: 4 / span 1;
     width: 480px;
     height: 120px;
 }
+
+ */
 .promotionButton {
     border: black solid 4px;
     border-radius: 5px;
@@ -33,8 +34,14 @@ body {
     height: 480px;
     grid-template-rows: repeat(8, 1fr);
     grid-template-columns: repeat(1, 1fr);
-    margin: 0 auto;
+    /*
+    column-span: 4;
+    row-span: 4;
+
+     */
 }
+
+
 
 .row {
     display: grid;
@@ -68,4 +75,44 @@ img {
     width: 60px;
     height: 60px;
     margin: 0 auto;
+}
+/*
+.game {
+    margin: 0 auto;
+    display: grid;
+    width: 600px;
+    height: 600px;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+}
+
+ */
+
+.game {
+    margin: 0 auto;
+    display: grid;
+    width: 600px;
+    height: 600px;
+    grid-template-columns: 120px 1fr 120px; /* Divide the layout into three columns */
+    grid-template-rows: auto; /* Automatically adjust rows */
+    gap: 10px; /* Add gap between grid items */
+}
+
+.setup {
+    grid-column: 1; /* Place setup in the first column */
+    grid-row: 1 / span 5; /* Span 5 rows */
+}
+
+.board {
+    grid-column: 2; /* Place board in the second column */
+    grid-row: 1; /* Place board in the first row */
+}
+
+.promotionButtons {
+    grid-column: 2; /* Place promotion buttons in the third column */
+    grid-row: 2; /* Span 2 rows */
+    display: flex; /* Change display to flex */
+    flex-direction: row; /* Align buttons horizontally */
+    align-items: center; /* Center items vertically */
+    justify-content: space-around; /* Space items evenly */
 }

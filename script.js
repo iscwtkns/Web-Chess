@@ -2,7 +2,11 @@ const squares = document.querySelectorAll(".square");
 const promotionButtons = document.querySelectorAll(".promotionButton");
 let selectedSquare = null;
 let whiteTurn = true;
-
+let whiteLeftCastle = true;
+let whiteRightCastle = true;
+let blackLeftCastle = true;
+let blackRightCastle = true;
+let enPassantColumn = null;
 let board = [
     ["", "", "", "", "", "", "", ""],
     ["", "", "", "", "", "wp", "", ""],
@@ -14,7 +18,7 @@ let board = [
     ["", "", "", "", "", "", "", ""]
 ];
 
-//board = initialiseBoard();
+board = initialiseBoard();
 drawPieces();
 closePromotionButtons();
 
@@ -119,8 +123,58 @@ function openPromotionButtons() {
     }
 }
 function move(squareFrom, squareTo) {
+    enPassantColumn = null;
     let posFrom = convertToPos(squareFrom);
     let posTo = convertToPos(squareTo);
+
+    //Handle Castling
+    if (equal(posFrom, [7, 4]) && equal(posTo, [7, 2]) && whiteLeftCastle) {
+        board[7][3] = board[7][0];
+        board[7][0] = "";
+    }
+    if (equal(posFrom, [7, 4]) && equal(posTo, [7, 6]) && whiteRightCastle) {
+        board[7][5] = board[7][7];
+        board[7][7] = "";
+    }
+    if (equal(posFrom, [0, 4]) && equal(posTo, [0, 2]) && blackLeftCastle) {
+        board[0][3] = board[0][0];
+        board[0][0] = "";
+    }
+    if (equal(posFrom, [0, 4]) && equal(posTo, [0, 6]) && blackRightCastle) {
+        board[0][5] = board[0][7];
+        board[0][7] = "";
+    }
+    if (equal(posFrom, [0,0])) {
+        blackLeftCastle = false;
+    }
+    if (equal(posFrom, [0,7])) {
+        blackRightCastle = false;
+    }
+    if (equal(posFrom, [7,0])) {
+        whiteLeftCastle = false;
+    }
+    if (equal(posFrom, [7,7])) {
+        whiteRightCastle = false;
+    }
+    if (equal(posFrom, [0,4])) {
+        blackRightCastle = false;
+        blackLeftCastle = false;
+    }
+    if (equal(posFrom, [7,4])) {
+        whiteLeftCastle = false;
+        whiteRightCastle = false;
+    }
+
+    //Handle En Passant
+    if (board[posFrom[0]][posFrom[1]] === "wp" || board[posFrom[0]][posFrom[1]] === "bp") {
+        if (Math.abs(posFrom[0] - posTo[0]) === 2) {
+            enPassantColumn = posFrom[1];
+        }
+        else if (posFrom[1] !== posTo[1] && board[posTo[0]][posTo[1]] === "") {
+            board[posFrom[0]][posTo[1]] = "";
+        }
+    }
+
     board[posTo[0]][posTo[1]] = board[posFrom[0]][posFrom[1]];
     board[posFrom[0]][posFrom[1]] = "";
 }
@@ -407,7 +461,20 @@ function returnMovableSquares(square) {
                 }
             }
         }
-
+        if (!whiteCheck(board)) {
+            if (whiteLeftCastle) {
+                let pos = [originalPos[0], originalPos[1] - 2];
+                if (returnColor(board[pos[0]][pos[1]+1]) === "" && returnColor(board[pos[0]][pos[1]-1]) === "" && returnColor(board[pos[0]][pos[1]]) === "") {
+                    movableSquares.push(convertToSquare(pos));
+                }
+            }
+            if (whiteRightCastle) {
+                let pos = [originalPos[0], originalPos[1] + 2];
+                if (returnColor(board[pos[0]][pos[1]-1]) === "" && returnColor(board[pos[0]][pos[1]]) === "") {
+                    movableSquares.push(convertToSquare(pos));
+                }
+            }
+        }
     }
     if (board[originalPos[0]][originalPos[1]] === "wp") {
         const firstPos = [originalPos[0] - 1, originalPos[1]];
@@ -427,6 +494,13 @@ function returnMovableSquares(square) {
         const diagonalRightPos = [originalPos[0] - 1, originalPos[1] + 1];
         if (isValid(diagonalRightPos) && returnColor(board[diagonalRightPos[0]][diagonalRightPos[1]]) === "b") {
             movableSquares.push(convertToSquare(diagonalRightPos));
+        }
+        if (originalPos[0] === 3) {
+            if (enPassantColumn !== null) {
+                if (Math.abs(originalPos[1]-enPassantColumn) === 1) {
+                    movableSquares.push(convertToSquare([2, enPassantColumn]));
+                }
+            }
         }
     }
     if (board[originalPos[0]][originalPos[1]] === "br") {
@@ -693,10 +767,25 @@ function returnMovableSquares(square) {
                         }
                     }
                 }
+        if (!blackCheck(board)) {
+            if (blackLeftCastle) {
+                let pos = [originalPos[0], originalPos[1] - 2];
+                if (returnColor(board[pos[0]][pos[1]+1]) === "" && returnColor(board[pos[0]][pos[1]-1]) === "" && returnColor(board[pos[0]][pos[1]]) === "") {
+                    movableSquares.push(convertToSquare(pos));
+                }
+            }
+            if (blackRightCastle) {
+                let pos = [originalPos[0], originalPos[1] + 2];
+                if (returnColor(board[pos[0]][pos[1]-1]) === "" && returnColor(board[pos[0]][pos[1]]) === "") {
+                    movableSquares.push(convertToSquare(pos));
+                }
+            }
+        }
+
     }
     if (board[originalPos[0]][originalPos[1]] === "bp") {
-                const firstPos = [originalPos[0] + 1, originalPos[1]];
-                if (!isOccupied(convertToSquare(firstPos))) {
+        const firstPos = [originalPos[0] + 1, originalPos[1]];
+        if (!isOccupied(convertToSquare(firstPos))) {
                     movableSquares.push(convertToSquare(firstPos));
                     if (originalPos[0] === 1) {
                         const secondPos = [originalPos[0] + 2, originalPos[1]];
@@ -705,15 +794,22 @@ function returnMovableSquares(square) {
                         }
                     }
                 }
-                const diagonalLeftPos = [originalPos[0] + 1, originalPos[1] - 1];
-                if (isValid(diagonalLeftPos) && returnColor(board[diagonalLeftPos[0]][diagonalLeftPos[1]]) === "w") {
+        const diagonalLeftPos = [originalPos[0] + 1, originalPos[1] - 1];
+        if (isValid(diagonalLeftPos) && returnColor(board[diagonalLeftPos[0]][diagonalLeftPos[1]]) === "w") {
                     movableSquares.push(convertToSquare(diagonalLeftPos));
                 }
-                const diagonalRightPos = [originalPos[0] + 1, originalPos[1] + 1];
-                if (isValid(diagonalRightPos) && returnColor(board[diagonalRightPos[0]][diagonalRightPos[1]]) === "w") {
+        const diagonalRightPos = [originalPos[0] + 1, originalPos[1] + 1];
+        if (isValid(diagonalRightPos) && returnColor(board[diagonalRightPos[0]][diagonalRightPos[1]]) === "w") {
                     movableSquares.push(convertToSquare(diagonalRightPos));
                 }
+        if (originalPos[0] === 4) {
+            if (enPassantColumn !== null) {
+                if (Math.abs(originalPos[1]-enPassantColumn) === 1) {
+                    movableSquares.push(convertToSquare([5, enPassantColumn]));
+                }
             }
+        }
+    }
     for (let i = movableSquares.length-1; i >= 0; i--) {
         const oldBoard = board.map(row => [...row]); // Deep copy of the board array
         const pos = convertToPos(movableSquares[i]);
@@ -1452,4 +1548,20 @@ function returnAllTargetedSquares(square) {
     }
     */
     return movableSquares;
+}
+function equal(pos1, pos2) {
+    return pos1[0] === pos2[0] && pos1[1] === pos2[1]
+}
+function startGame() {
+    board = initialiseBoard();
+    drawPieces();
+    closePromotionButtons();
+    selectedSquare = null;
+    highlightSquares();
+    whiteLeftCastle = true;
+    whiteRightCastle = true;
+    blackLeftCastle = true
+    blackRightCastle = true;
+    enPassantColumn = null;
+    whiteTurn = true;
 }
